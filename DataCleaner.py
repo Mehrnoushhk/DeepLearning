@@ -1,5 +1,7 @@
-def ClearData(data):
+import pandas as pd
+def ClearData(filePath):
     # This function prepare metatrader exported file for machine learning use
+    data= pd.read_csv(filePath)
     data.columns= ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
     import datetime
     for i in range(0, data.shape[0]):
