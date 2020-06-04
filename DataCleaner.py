@@ -14,7 +14,11 @@ def ClearData(filePath):
         m= int(temptime[3:])
         tempdate= datetime.datetime(year= a, month= b, day= c, hour= h, minute= m, second= 0)
         data.iloc[i,0]= tempdate
+    del data['Time']
+    data.set_index('Date', inplace= True)
+    data.index= pd.to_datetime(data.index)
     return data
 
 df= ClearData('https://raw.githubusercontent.com/Mehrnoushhk/DeepLearning/master/USDJPYm30.csv')
 print(df.head())
+print(type(df['Date']))
