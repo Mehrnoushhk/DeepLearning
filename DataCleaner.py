@@ -1,6 +1,6 @@
-import pandas as pd
 def ClearData(filePath):
     # This function prepare metatrader exported file for machine learning use
+    import pandas as pd
     data= pd.read_csv(filePath)
     data.columns= ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
     import datetime
@@ -10,6 +10,11 @@ def ClearData(filePath):
         b= int(temptext[5:7])
         c= int(temptext[8:])
         temptime= data.iloc[i, 1]
-        h= int(temptime[:-3])
-        tempdate= datetime.datetime(year= a, month= b, day= c, hour= h, minute= 0, second= 0)
+        h= int(temptime[0:2])
+        m= int(temptime[3:])
+        tempdate= datetime.datetime(year= a, month= b, day= c, hour= h, minute= m, second= 0)
         data.iloc[i,0]= tempdate
+    return data
+
+df= ClearData('https://raw.githubusercontent.com/Mehrnoushhk/DeepLearning/master/USDJPYm30.csv')
+print(df.head())
