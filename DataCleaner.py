@@ -19,6 +19,12 @@ def ClearData(filePath):
     data.index= pd.to_datetime(data.index)
     return data
 
-df= ClearData('https://raw.githubusercontent.com/Mehrnoushhk/DeepLearning/master/USDJPYm30.csv')
-print(df.head())
-print(type(df['Date']))
+def mergeCurrencies(data1, name1, data2, name2):
+    import pandas as pd
+    data1.columns= [name1+'Open', name1+'High', name1+'Low', name1+'Close', name1+'Volume']
+    data2.columns= [name2+'Open', name2+'High', name2+'Low', name2+'Close', name2+'Volume']
+    data1Step= data1.index.values[1]- data1.index.values[0]
+    data2Step= data2.index.values[1]- data2.index.values[0]
+    if data1Step == data2Step:
+        fulldata= pd.merge(data1, data2, on='Date')
+    return fulldata
