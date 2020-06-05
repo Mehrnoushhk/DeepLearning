@@ -1,8 +1,8 @@
-def ClearData(filePath, name):
+def ClearData(filePath):
     # This function prepare metatrader exported file for machine learning use
     import pandas as pd
     data= pd.read_csv(filePath)
-    data.columns= ['Date', 'Time', name+'Open', name+'High', name+'Low', name+'Close', name+'Volume']
+    data.columns= ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
     import datetime
     for i in range(0, data.shape[0]):
         temptext= data.iloc[i, 0]
@@ -18,32 +18,13 @@ def ClearData(filePath, name):
     data.set_index('Date', inplace= True)
     data.index= pd.to_datetime(data.index)
     return data
-def mergeCurrencies(data1, data2):
+
+def mergeCurrencies(data1, name1, data2, name2):
     import pandas as pd
-    data1Step= data1.iloc[0,1]- data1.iloc[0,0]
-    data2Step= data2.iloc[0,1]- data2.iloc[0,0]
-    print(data1Step)
-    print(data2Step)
-    # if data1Step == data2Step:
-    #     fulldata= pd.merge(data1, data2, on='Date')
-    # else:
-    fulldata= data1
+    data1.columns= [name1+'Open', name1+'High', name1+'Low', name1+'Close', name1+'Volume']
+    data2.columns= [name2+'Open', name2+'High', name2+'Low', name2+'Close', name2+'Volume']
+    data1Step= data1.index.values[1]- data1.index.values[0]
+    data2Step= data2.index.values[1]- data2.index.values[0]
+    if data1Step == data2Step:
+        fulldata= pd.merge(data1, data2, on='Date')
     return fulldata
-
-
-urlEUR='https://raw.githubusercontent.com/Mehrnoushhk/DeepLearning/master/EURUSDm30.csv'
-urlGBP='https://raw.githubusercontent.com/Mehrnoushhk/DeepLearning/master/GBPUSDm30.csv'
-
-dfEUR= ClearData(urlEUR, 'EUR')
-dfGBP= ClearData(urlGBP, 'GBP')
-print(dfEUR.head())
-print(dfGBP.head())
-dfMarket = mergeCurrencies(dfEUR, dfGBP)
-print(dfMarket.head())
-
-
-
-""" 
-import mplfinance as mpl
-mpl.plot(df.iloc[0:100,:], type= 'candle', style= 'charles', figscale= 6) 
-"""
