@@ -28,3 +28,17 @@ def mergeCurrencies(data1, name1, data2, name2):
     if data1Step == data2Step:
         fulldata= pd.merge(data1, data2, on='Date')
     return fulldata
+
+def localOptimum(data, nStep):
+    isMax= []
+    isMin= []
+    for i in range(nStep, data.shape[0]-nStep):
+        tempIsMax= True
+        tempIsMin= True
+        for j in range(i-nstep, i):
+            # This is the ith row, n previous candels
+            if data.iloc[i,1] < data.iloc[j, 1]:
+                tempIsMax= False
+            if data.iloc[i, 2] > data.iloc[j, 2]:
+                tempIsMin = False
+            
