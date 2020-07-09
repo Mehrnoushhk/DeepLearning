@@ -8,3 +8,9 @@ from DataCleaner import dataCleaner
 data= dataCleaner(data)
 from DataCleaner import localMax
 from DataCleaner import localMin
+dataMax, dataMaxValue= localMax(data, 4)
+dataMin, dataMinValue= localMin(data, 4)
+data['isMax']= dataMax
+data['maxValue']= dataMaxValue
+data['isMin']= dataMin
+data['minValue']= dataMinValue
