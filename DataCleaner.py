@@ -1,5 +1,8 @@
+print('Hi')
 def dataCleaner(data):
     import datetime
+    import numpy as np
+    import pandas as pd
     data.columns= ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume'] 
     numericIndex= []
     for i in range(0, data.shape[0]):
@@ -29,16 +32,60 @@ def mergeCurrencies(data1, name1, data2, name2):
         fulldata= pd.merge(data1, data2, on='Date')
     return fulldata
 
-def localOptimum(data, nStep):
-    isMax= []
-    isMin= []
-    for i in range(nStep, data.shape[0]-nStep):
-        tempIsMax= True
-        tempIsMin= True
-        for j in range(i-nstep, i):
-            # This is the ith row, n previous candels
-            if data.iloc[i,1] < data.iloc[j, 1]:
-                tempIsMax= False
-            if data.iloc[i, 2] > data.iloc[j, 2]:
-                tempIsMin = False
+# def localOptimum(data, nStep):
+#     isMax= []
+#     isMin= []
+#     for i in range(nStep, data.shape[0]-nStep):
+#         tempIsMax= True
+#         tempIsMin= True
+#         for j in range(i-nstep, i):
+#             # This is the ith row, n previous candels
+#             if data.iloc[i,1] < data.iloc[j, 1]:
+#                 tempIsMax= False
+#             if data.iloc[i, 2] > data.iloc[j, 2]:
+#                 tempIsMin = False
             
+# Define Local Maximum
+def localMax(data, step):
+    import numpy as np
+    isMax= []
+    maxValue= []
+    for i in range(0, step):
+        isMax.append(False)
+        maxValue.append(np.nan)
+    for i in range(step, data.shape[0]-step):
+        tempOptimal= True
+        tempValue= data.iloc[i, 1]
+        for j in range(1, step+1):
+            if (data.iloc[i,1] < data.iloc[i-j,1]) or (data.iloc[i,1] < data.iloc[i+j, 1]):
+                tempOptimal= False
+                tempValue= np.nan
+            isMax.append(tempOptimal)
+            maxValue.append(tempValue)
+    for i in range(0, step):
+        isMax.append(False)
+        maxValue.append(np.nan)  
+    return isMax, maxValue            
+
+
+# Define Local Minimum
+def localMin(data, step):
+    import numpy as np
+    isMin= []
+    minValue= []
+    for i in range(0, step):
+        isMin.append(False)
+        minValue.append(np.nan)
+    for i in range(step, data.shape[0]-step):
+        tempOptimal= True
+        tempValue= data.iloc[i, 2]
+        for j in range(1, step+1):
+            if (data.iloc[i,2] > data.iloc[i-j,2]) or (data.iloc[i,2] > data.iloc[i+j, 2]):
+                tempOptimal= False
+                tempValue= np.nan
+            isMin.append(tempOptimal)
+            minValue.append(tempValue)
+    for i in range(0, step):
+        isMin.append(False)
+        minValue.append(np.nan)  
+    return isMin, minValue
