@@ -65,3 +65,41 @@ def localMin(data, step):
         isMin.append(False)
         minValue.append(np.nan)  
     return isMin, minValue
+
+
+def nextHigh(data, i):
+    nextHighValue= data.iloc[i].loc['maxValue']
+    for j in range(i+1, data.shape[0]):
+        if data.iloc[j].loc['isMax']== True:
+            nextHighValue= data.iloc[j].loc['maxValue']
+            break
+    return nextHighValue
+
+def nextLow(data, i):
+    nextLowValue= data.iloc[i].loc['minValue']
+    for j in range(i+1, data.shape[0]):
+        if data.iloc[j].loc['isMin']== True:
+            nextLowValue= data.iloc[j].loc['minValue']
+            break
+    return nextLowValue
+
+def previousHigh(data, i):
+    previousHighValue= data.iloc[i].loc['maxValue']
+    j= i-1
+    while j>= 0:
+        if data.iloc[j].loc['isMax']== True:
+            previousHighValue= data.iloc[j].loc['maxValue']
+            break
+        j= j- 1
+    return previousHighValue
+
+def previousLow(data, i):
+    previousLowValue= data.iloc[i].loc['minValue']
+    j= i-1
+    while j>= 0:
+        if data.iloc[j].loc['isMin']== True:
+            previousLowValue= data.iloc[j].loc['minValue']
+            break
+        j= j-1
+    return previousLowValue
+    
