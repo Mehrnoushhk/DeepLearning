@@ -1,24 +1,23 @@
-def ClearData(filePath):
-    # This function prepare metatrader exported file for machine learning use
 def dataCleaner(data):
-  data.columns= ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume'] 
-  numericIndex= []
-  for i in range(0, data.shape[0]):
-    temptext= data.iloc[i, 0]
-    a= int(temptext[0:4])
-    b= int(temptext[5:7])
-    c= int(temptext[8:])
-    temptime= data.iloc[i, 1]
-    h= int(temptime[:-3])
-    m= int(temptime[3:])
-    tempdate= datetime.datetime(year= a, month= b, day= c, hour= h, minute= m, second= 0)
-    data.iloc[i,0]= tempdate
-    numericIndex.append(i)
-  del data['Time']
-  data.set_index('Date', inplace= True)
-  data.index= pd.to_datetime(data.index)
-  data['ID']= numericIndex
-  return data
+    import datetime
+    data.columns= ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume'] 
+    numericIndex= []
+    for i in range(0, data.shape[0]):
+        temptext= data.iloc[i, 0]
+        a= int(temptext[0:4])
+        b= int(temptext[5:7])
+        c= int(temptext[8:])
+        temptime= data.iloc[i, 1]
+        h= int(temptime[:-3])
+        m= int(temptime[3:])
+        tempdate= datetime.datetime(year= a, month= b, day= c, hour= h, minute= m, second= 0)
+        data.iloc[i,0]= tempdate
+        numericIndex.append(i)
+    del data['Time']
+    data.set_index('Date', inplace= True)
+    data.index= pd.to_datetime(data.index)
+    data['ID']= numericIndex
+    return data
 
 def mergeCurrencies(data1, name1, data2, name2):
     import pandas as pd
