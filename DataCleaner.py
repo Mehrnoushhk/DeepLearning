@@ -123,3 +123,5 @@ def nextTrend(data, i):
             Trend[i]= 0
 
     return Trend
+
+print('Bye')
