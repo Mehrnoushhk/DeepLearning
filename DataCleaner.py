@@ -1,4 +1,6 @@
-print('Hi')
+print('Hello World!')
+import datetime
+import numpy as np
 def dataCleaner(data):
     import datetime
     import numpy as np
@@ -103,3 +105,21 @@ def previousLow(data, i):
         j= j-1
     return previousLowValue
     
+def nextTrend(data, i):
+    Trend= np.empty((data.shape[0], 1))
+    Trend[:]= np.nan
+    Trend= list(Trend)
+    if data.iloc[i].loc['isMax'] == True:
+        if ((nextHigh(data,i)<data.iloc[i].loc['maxValue']) and (nextLow(data,i)<previousLow(data,i))):
+            Trend[i]= -1
+        else:
+            Trend[i]= 0
+
+    
+    if data.iloc[i].loc['isMin'] == True:
+        if (nextLow(data, i) > data.iloc[i].loc['minValue']) and (nextHigh(data, i) > previousHigh(data, i)):
+            Trend[i]= 1
+        else:
+            Trend[i]= 0
+
+    return Trend
