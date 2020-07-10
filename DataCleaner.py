@@ -105,10 +105,7 @@ def previousLow(data, i):
         j= j-1
     return previousLowValue
     
-def nextTrend(data, i):
-    Trend= np.empty((data.shape[0], 1))
-    Trend[:]= np.nan
-    Trend= list(Trend)
+def nextTrend(data, i, Trend):
     if data.iloc[i].loc['isMax'] == True:
         if ((nextHigh(data,i)<data.iloc[i].loc['maxValue']) and (nextLow(data,i)<previousLow(data,i))):
             Trend[i]= -1
