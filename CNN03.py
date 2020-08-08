@@ -12,12 +12,11 @@ from DataCleaner import localMin
 dataMax, dataMaxValue= localMax(data, 4)
 dataMin, dataMinValue= localMin(data, 4)
 minMax= pd.DataFrame(list(zip(dataMinValue, dataMaxValue)), columns=['min', 'Max'])
-data['isMax']= dataMax
-data['maxValue']= dataMaxValue
-data['isMin']= dataMin
-data['minValue']= dataMinValue
-isMaxid= 6
-maxValueid= 7
-isMinid= 8
-minValueid= 9
-Trendid= 10
+adp= mpl.make_addplot(minMax[len(minMax)-100:], type= 'scatter', markersize= 200)
+mpl.plot(data.iloc[data.shape[0]-100: data.shape[0],:], type= 'candle', style= 'charles', figscale= 6, addplot= adp)
+# isMaxid= 6
+# maxValueid= 7
+# isMinid= 8
+# minValueid= 9
+# Trendid= 10
+from DataCleaner import nextTrend

@@ -25,6 +25,7 @@ def dataCleaner(data):
     return data
 
 def localMax(data, step):
+    # Returns two list, a True/False list and a Value list
     import numpy as np
     isMax= []
     maxValue= []
