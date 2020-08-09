@@ -106,20 +106,22 @@ def previousLow(data, i):
         j= j-1
     return previousLowValue
     
-def nextTrend(data, i, Trend):
+def nextTrend(data, i):
+    data['Trend']= np.NaN
+    j= data.columns.get_loc("Trend")
     if data.iloc[i].loc['isMax'] == True:
         if ((nextHigh(data,i)<data.iloc[i].loc['maxValue']) and (nextLow(data,i)<previousLow(data,i))):
-            Trend[i]= -1
+            data.iloc[i, j]= -1
         else:
-            Trend[i]= 0
+            data.iloc[i, j]= 0
 
     
     if data.iloc[i].loc['isMin'] == True:
         if (nextLow(data, i) > data.iloc[i].loc['minValue']) and (nextHigh(data, i) > previousHigh(data, i)):
-            Trend[i]= 1
+            data.iloc[i, j]= 1
         else:
-            Trend[i]= 0
+            data.iloc[i, j]= 0
 
-    return Trend
+    
 
 print('Bye')
