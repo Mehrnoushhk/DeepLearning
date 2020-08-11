@@ -26,3 +26,4 @@ data['minValue']= dataMinValue
 from DataCleaner import nextTrend
 for i in range (0, data.shape[0]):
     nextTrend(data, i)
+print(data.tail(n=10))

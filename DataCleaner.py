@@ -107,7 +107,7 @@ def previousLow(data, i):
     return previousLowValue
     
 def nextTrend(data, i):
-    data['Trend']= np.NaN
+    
     j= data.columns.get_loc("Trend")
     if data.iloc[i].loc['isMax'] == True:
         if ((nextHigh(data,i)<data.iloc[i].loc['maxValue']) and (nextLow(data,i)<previousLow(data,i))):
