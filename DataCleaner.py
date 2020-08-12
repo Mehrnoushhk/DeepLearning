@@ -44,7 +44,9 @@ def localMax(data, step):
     for i in range(0, step):
         isMax.append(False)
         maxValue.append(np.nan)  
-    return isMax, maxValue            
+    data['isMax']= isMax
+    data['maxValue']= maxValue
+    return data            
 
 
 # Define Local Minimum
@@ -67,7 +69,9 @@ def localMin(data, step):
     for i in range(0, step):
         isMin.append(False)
         minValue.append(np.nan)  
-    return isMin, minValue
+    data['isMin']= isMin
+    data['minValue']= minValue
+    return data
 
 
 def nextHigh(data, i):
