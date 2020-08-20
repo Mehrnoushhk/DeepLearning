@@ -112,16 +112,19 @@ def previousLow(data, i):
     
 def nextTrend(data):
     j= data.columns.get_loc("Trend")
+    k= data.columns.get_loc('TrendValue')
     for i in range(0, data.shape[0]):
         if data.iloc[i].loc['isMax'] == True:
             if ((nextHigh(data,i)<data.iloc[i].loc['maxValue']) and (nextLow(data,i)<previousLow(data,i))):
                 data.iloc[i, j]= -1
+                data.iloc[i, k]= data.iloc[i].loc['maxValue']
             else:
                 data.iloc[i, j]= 0
        
         if data.iloc[i].loc['isMin'] == True:
             if (nextLow(data, i) > data.iloc[i].loc['minValue']) and (nextHigh(data, i) > previousHigh(data, i)):
                 data.iloc[i, j]= 1
+                data.iloc[i, k]= data.iloc[i].loc['minValue']
             else:
                 data.iloc[i, j]= 0
     return(data)
